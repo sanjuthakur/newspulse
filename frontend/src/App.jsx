@@ -83,6 +83,16 @@ function ArticleCard({ article, onBookmarkToggle }) {
         <span>{formatDate(article.published_at)}</span>
       </div>
       <div className="article-body">
+        {article.image_url ? (
+          <div className="article-image-wrap">
+            <img
+              className="article-image"
+              src={article.image_url}
+              alt={article.title}
+              loading="lazy"
+            />
+          </div>
+        ) : null}
         <div>
           <h3>{article.title}</h3>
           <p className="summary">{article.summary}</p>
