@@ -251,7 +251,7 @@ function App() {
     <div className="app-shell">
       <header className="hero">
         <div>
-          <h1>One screen for the stories that actually matter to you.</h1>
+          <h1>The stories that matter.</h1>
           <p className="hero-copy">
             Personalized headlines, compact summaries, category filters, and saved reading.
           </p>
