@@ -5,6 +5,7 @@ import {
   fetchCategories,
   fetchFeed,
   fetchUser,
+  refreshNews,
   saveBookmark,
   searchArticles,
   updatePreferences,
@@ -18,6 +19,19 @@ function formatDate(value) {
     day: "numeric",
     hour: "numeric",
     minute: "2-digit",
+  });
+}
+
+function formatRefreshTimestamp(value) {
+  if (!value) {
+    return "Not refreshed yet";
+  }
+  return new Date(value).toLocaleString(undefined, {
+    month: "short",
+    day: "numeric",
+    hour: "numeric",
+    minute: "2-digit",
+    second: "2-digit",
   });
 }
 
@@ -100,8 +114,11 @@ function App() {
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [savingPreferences, setSavingPreferences] = useState(false);
+  const [refreshingNews, setRefreshingNews] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [statusMessage, setStatusMessage] = useState("");
+  const [lastRefreshedAt, setLastRefreshedAt] = useState("");
 
   useEffect(() => {
     async function loadInitialData() {
@@ -118,6 +135,7 @@ function App() {
         setSelectedCategoryIds(userData.preferences.map((item) => item.id));
         setFeed(feedData.items);
         setBookmarks(bookmarkData);
+        setLastRefreshedAt(new Date().toISOString());
       } catch (loadError) {
         setError(loadError.message);
       } finally {
@@ -133,6 +151,7 @@ function App() {
       try {
         const feedData = await fetchFeed(DEMO_USER_ID, activeFilter);
         setFeed(feedData.items);
+        setLastRefreshedAt(new Date().toISOString());
       } catch (loadError) {
         setError(loadError.message);
       }
@@ -143,6 +162,8 @@ function App() {
 
   async function handleSavePreferences() {
     try {
+      setError("");
+      setStatusMessage("");
       setSavingPreferences(true);
       const userData = await updatePreferences(DEMO_USER_ID, selectedCategoryIds);
       setUser(userData);
@@ -170,6 +191,7 @@ function App() {
       return;
     }
     try {
+      setError("");
       const results = await searchArticles(DEMO_USER_ID, searchQuery.trim());
       setSearchResults(results);
     } catch (searchError) {
@@ -179,6 +201,8 @@ function App() {
 
   async function handleBookmarkToggle(article) {
     try {
+      setError("");
+      setStatusMessage("");
       if (article.is_bookmarked) {
         await deleteBookmark(DEMO_USER_ID, article.id);
       } else {
@@ -199,6 +223,26 @@ function App() {
     }
   }
 
+  async function handleManualRefresh() {
+    try {
+      setRefreshingNews(true);
+      setError("");
+      const refreshResult = await refreshNews();
+      const [feedData, bookmarkData] = await Promise.all([
+        fetchFeed(DEMO_USER_ID, activeFilter),
+        fetchBookmarks(DEMO_USER_ID),
+      ]);
+      setFeed(feedData.items);
+      setBookmarks(bookmarkData);
+      setStatusMessage(refreshResult.message);
+      setLastRefreshedAt(new Date().toISOString());
+    } catch (refreshError) {
+      setError(refreshError.message);
+    } finally {
+      setRefreshingNews(false);
+    }
+  }
+
   if (loading) {
     return <div className="state-screen">Loading NewsPulse...</div>;
   }
@@ -216,6 +260,7 @@ function App() {
       </header>
 
       {error ? <div className="error-banner">{error}</div> : null}
+      {statusMessage ? <div className="success-banner">{statusMessage}</div> : null}
 
       <main className="layout">
         <section className="main-column">
@@ -232,8 +277,17 @@ function App() {
               <div>
                 <p className="eyebrow">Feed</p>
                 <h2>Top stories</h2>
+                <p className="refresh-note">Last refreshed: {formatRefreshTimestamp(lastRefreshedAt)}</p>
               </div>
-              <div className="chip-row">
+              <div className="feed-actions">
+                <button
+                  className="secondary-button"
+                  onClick={handleManualRefresh}
+                  disabled={refreshingNews}
+                >
+                  {refreshingNews ? "Refreshing..." : "Refresh news"}
+                </button>
+                <div className="chip-row">
                 <button
                   className={`chip ${activeFilter === "" ? "chip-active" : ""}`}
                   onClick={() => setActiveFilter("")}
@@ -249,6 +303,7 @@ function App() {
                     {category.name}
                   </button>
                 ))}
+                </div>
               </div>
             </div>
             <div className="article-list">

@@ -58,3 +58,9 @@ export function deleteBookmark(userId, articleId) {
     method: "DELETE",
   });
 }
+
+export function refreshNews() {
+  return request("/admin/refresh", {
+    method: "POST",
+  });
+}

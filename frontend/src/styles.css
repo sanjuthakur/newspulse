@@ -65,6 +65,12 @@ input {
   font-size: 1.05rem;
 }
 
+.refresh-note {
+  margin: 8px 0 0;
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
 .panel,
 .article-card {
   backdrop-filter: blur(12px);
@@ -105,6 +111,13 @@ input {
   gap: 16px;
   align-items: flex-start;
   margin-bottom: 18px;
+}
+
+.feed-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 12px;
 }
 
 .chip-row {
@@ -218,6 +231,7 @@ input {
 }
 
 .error-banner,
+.success-banner,
 .state-screen {
   border-radius: 20px;
   padding: 16px 20px;
@@ -227,6 +241,11 @@ input {
 .error-banner {
   background: #ffe3de;
   color: #7e2210;
+}
+
+.success-banner {
+  background: #dff5e9;
+  color: #15533a;
 }
 
 .state-screen {
@@ -261,6 +280,10 @@ input {
   .panel-header,
   .search-form {
     flex-direction: column;
+  }
+
+  .feed-actions {
+    align-items: stretch;
   }
 
   .hero h1 {
