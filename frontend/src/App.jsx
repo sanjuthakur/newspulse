@@ -251,7 +251,6 @@ function App() {
     <div className="app-shell">
       <header className="hero">
         <div>
-          <p className="eyebrow">NewsPulse MVP</p>
           <h1>One screen for the stories that actually matter to you.</h1>
           <p className="hero-copy">
             Personalized headlines, compact summaries, category filters, and saved reading.
