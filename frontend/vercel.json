@@ -7,11 +7,11 @@
   "rewrites": [
     {
       "source": "/api/(.*)",
-      "destination": "https://newspulse-api-mea4.onrender.com"
+      "destination": "https://newspulse-api-mea4.onrender.com/api/$1"
     },
     {
       "source": "/health",
-      "destination": "https://newspulse-api-mea4.onrender.com"
+      "destination": "https://newspulse-api-mea4.onrender.com/health"
     }
   ]
 }
