@@ -105,6 +105,7 @@ function ArticleCard({ article, onBookmarkToggle }) {
 }
 
 function App() {
+  const [theme, setTheme] = useState("light");
   const [user, setUser] = useState(null);
   const [categories, setCategories] = useState([]);
   const [selectedCategoryIds, setSelectedCategoryIds] = useState([]);
@@ -119,6 +120,10 @@ function App() {
   const [error, setError] = useState("");
   const [statusMessage, setStatusMessage] = useState("");
   const [lastRefreshedAt, setLastRefreshedAt] = useState("");
+
+  useEffect(() => {
+    document.documentElement.setAttribute("data-theme", theme);
+  }, [theme]);
 
   useEffect(() => {
     async function loadInitialData() {
@@ -258,6 +263,17 @@ function App() {
             </p>
           </div>
           <div className="hero-search">
+            <label className="theme-toggle" aria-label="Toggle dark mode">
+              <span className="theme-toggle-label">Dark mode</span>
+              <button
+                type="button"
+                className={`theme-switch ${theme === "dark" ? "theme-switch-on" : ""}`}
+                onClick={() => setTheme((current) => (current === "dark" ? "light" : "dark"))}
+                aria-pressed={theme === "dark"}
+              >
+                <span className="theme-switch-thumb" />
+              </button>
+            </label>
             <form className="search-form hero-search-form" onSubmit={handleSearch}>
               <input
                 type="text"
