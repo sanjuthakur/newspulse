@@ -100,4 +100,14 @@ def seed_database(db: Session) -> None:
             "url": "https://www.reuters.com/markets/us/",
             "image_url": "https://images.example.com/fed.jpg",
             "summary": "Policymakers held their line on rates while indicating that labor and services inflation remain key watch points.",
-            "content_snippet": "Markets reacted modestly as investors reassessed the timing
+            "content_snippet": "Markets reacted modestly as investors reassessed the timing of future cuts.",
+            "dedupe_key": "fed-inflation-update",
+            "popularity_score": 88,
+            "published_at": now - timedelta(hours=1, minutes=10),
+            "source": source_map["Reuters"],
+            "category": category_map["Finance"],
+        },
+        {
+            "title": "Global chipmakers expand capacity to meet AI server demand",
+            "author": "Ava Patel",
+            "url": "https://www.bloomberg.com/news/articles/2025-03-05/nvidia-ai-server-maker-hon
