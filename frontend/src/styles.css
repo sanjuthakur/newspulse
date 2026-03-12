@@ -319,6 +319,19 @@ input {
   color: var(--text);
 }
 
+:root[data-theme="dark"] .bookmark-button {
+  background: #2b211d;
+  color: #f5ede3;
+  border: 1px solid rgba(211, 139, 99, 0.22);
+}
+
+:root[data-theme="dark"] .bookmark-button.active,
+:root[data-theme="dark"] .secondary-button,
+:root[data-theme="dark"] .search-form button,
+:root[data-theme="dark"] .chip-active {
+  color: #1a120e;
+}
+
 .search-form {
   display: flex;
   gap: 10px;
