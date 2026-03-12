@@ -264,11 +264,8 @@ function App() {
       <main className="layout">
         <section className="main-column">
           <section className="panel">
-            <div className="panel-header">
-              <div>
-                <p className="eyebrow">Search</p>
-                <h2>Find stories fast</h2>
-              </div>
+            <div className="compact-search-header">
+              <p className="eyebrow">Search</p>
             </div>
             <form className="search-form" onSubmit={handleSearch}>
               <input
@@ -347,23 +344,6 @@ function App() {
         </section>
 
         <aside className="sidebar">
-          <section className="panel">
-            <p className="eyebrow">Bookmarks</p>
-            <h2>Reading list</h2>
-            <div className="compact-list">
-              {bookmarks.length === 0 ? (
-                <p className="empty-state">No saved articles yet.</p>
-              ) : (
-                bookmarks.map((article) => (
-                  <ArticleCard
-                    key={`bookmark-${article.id}`}
-                    article={article}
-                    onBookmarkToggle={handleBookmarkToggle}
-                  />
-                ))
-              )}
-            </div>
-          </section>
         </aside>
       </main>
     </div>
