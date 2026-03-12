@@ -110,4 +110,4 @@ def seed_database(db: Session) -> None:
         {
             "title": "Global chipmakers expand capacity to meet AI server demand",
             "author": "Ava Patel",
-            "url": "https://www.bloomberg.com/news/articles/2025-03-05/nvidia-ai-server-maker-hon
+            "url": "https://www.bloomberg.com/technology",
