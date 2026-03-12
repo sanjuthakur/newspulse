@@ -50,6 +50,13 @@ input {
   box-shadow: var(--shadow);
 }
 
+.hero-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(320px, 0.9fr);
+  gap: 22px;
+  align-items: start;
+}
+
 .hero h1,
 .panel h2,
 .article-card h3 {
@@ -69,6 +76,20 @@ input {
   max-width: 48ch;
   color: var(--muted);
   font-size: 0.9rem;
+}
+
+.hero-search {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.hero-search-form {
+  width: min(100%, 520px);
+  margin: 0;
+  padding: 10px;
+  border: 1px solid var(--panel-border);
+  border-radius: 18px;
+  background: rgba(248, 250, 252, 0.95);
 }
 
 .refresh-note {
@@ -273,8 +294,12 @@ input {
 }
 
 @media (max-width: 1080px) {
-  .layout {
+  .hero-grid {
     grid-template-columns: 1fr;
+  }
+
+  .hero-search {
+    justify-content: stretch;
   }
 
   .article-body {

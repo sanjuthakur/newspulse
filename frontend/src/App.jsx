@@ -250,24 +250,15 @@ function App() {
   return (
     <div className="app-shell">
       <header className="hero">
-        <div>
-          <h1>The stories that matter.</h1>
-          <p className="hero-copy">
-            Personalized headlines, compact summaries, category filters, and saved reading.
-          </p>
-        </div>
-      </header>
-
-      {error ? <div className="error-banner">{error}</div> : null}
-      {statusMessage ? <div className="success-banner">{statusMessage}</div> : null}
-
-      <main className="layout">
-        <section className="main-column">
-          <section className="panel">
-            <div className="compact-search-header">
-              <p className="eyebrow">Search</p>
-            </div>
-            <form className="search-form" onSubmit={handleSearch}>
+        <div className="hero-grid">
+          <div>
+            <h1>The stories that matter.</h1>
+            <p className="hero-copy">
+              Personalized headlines, compact summaries, category filters, and saved reading.
+            </p>
+          </div>
+          <div className="hero-search">
+            <form className="search-form hero-search-form" onSubmit={handleSearch}>
               <input
                 type="text"
                 value={searchQuery}
@@ -276,7 +267,20 @@ function App() {
               />
               <button type="submit">Search</button>
             </form>
-            {searchResults.length > 0 ? (
+          </div>
+        </div>
+      </header>
+
+      {error ? <div className="error-banner">{error}</div> : null}
+      {statusMessage ? <div className="success-banner">{statusMessage}</div> : null}
+
+      <main className="layout">
+        <section className="main-column">
+          {searchResults.length > 0 ? (
+            <section className="panel">
+              <div className="compact-search-header">
+                <p className="eyebrow">Search Results</p>
+              </div>
               <div className="compact-list search-results">
                 {searchResults.map((article) => (
                   <ArticleCard
@@ -286,8 +290,8 @@ function App() {
                   />
                 ))}
               </div>
-            ) : null}
-          </section>
+            </section>
+          ) : null}
 
           <CategoryPicker
             categories={categories}
