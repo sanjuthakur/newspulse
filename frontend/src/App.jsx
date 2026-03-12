@@ -263,6 +263,35 @@ function App() {
 
       <main className="layout">
         <section className="main-column">
+          <section className="panel">
+            <div className="panel-header">
+              <div>
+                <p className="eyebrow">Search</p>
+                <h2>Find stories fast</h2>
+              </div>
+            </div>
+            <form className="search-form" onSubmit={handleSearch}>
+              <input
+                type="text"
+                value={searchQuery}
+                placeholder="Search OpenAI, finance, Reuters..."
+                onChange={(event) => setSearchQuery(event.target.value)}
+              />
+              <button type="submit">Search</button>
+            </form>
+            {searchResults.length > 0 ? (
+              <div className="compact-list search-results">
+                {searchResults.map((article) => (
+                  <ArticleCard
+                    key={`search-${article.id}`}
+                    article={article}
+                    onBookmarkToggle={handleBookmarkToggle}
+                  />
+                ))}
+              </div>
+            ) : null}
+          </section>
+
           <CategoryPicker
             categories={categories}
             selectedIds={selectedCategoryIds}
@@ -318,29 +347,6 @@ function App() {
         </section>
 
         <aside className="sidebar">
-          <section className="panel">
-            <p className="eyebrow">Search</p>
-            <h2>Find stories fast</h2>
-            <form className="search-form" onSubmit={handleSearch}>
-              <input
-                type="text"
-                value={searchQuery}
-                placeholder="Search OpenAI, finance, Reuters..."
-                onChange={(event) => setSearchQuery(event.target.value)}
-              />
-              <button type="submit">Search</button>
-            </form>
-            <div className="compact-list">
-              {searchResults.map((article) => (
-                <ArticleCard
-                  key={`search-${article.id}`}
-                  article={article}
-                  onBookmarkToggle={handleBookmarkToggle}
-                />
-              ))}
-            </div>
-          </section>
-
           <section className="panel">
             <p className="eyebrow">Bookmarks</p>
             <h2>Reading list</h2>
