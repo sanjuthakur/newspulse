@@ -9,7 +9,7 @@ from app.database import Base, SessionLocal, engine, get_db
 from app.ingestion import ingest_all_sources, run_ingestion_loop, should_enable_ingestion
 from app.models import Category, User
 from app.schemas import ArticleResponse, BookmarkRequest, FeedResponse, MessageResponse, UserResponse, UpdatePreferencesRequest
-from app.seed import seed_database
+from app.seed import ensure_base_data, seed_database
 from app.services import add_bookmark, get_bookmarks, get_feed, remove_bookmark, search_articles, update_user_preferences
 
 
@@ -35,6 +35,7 @@ async def on_startup() -> None:
     Base.metadata.create_all(bind=engine)
     db = SessionLocal()
     try:
+        ensure_base_data(db)
         if os.getenv("SEED_DATA", "true").lower() == "true":
             seed_database(db)
         if should_enable_ingestion():
