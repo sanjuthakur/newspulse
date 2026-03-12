@@ -7,7 +7,7 @@ from sqlalchemy.orm import Session, joinedload
 from app.database import Base, SessionLocal, engine, get_db
 from app.models import Category, User
 from app.schemas import ArticleResponse, BookmarkRequest, FeedResponse, MessageResponse, UserResponse, UpdatePreferencesRequest
-from app.seed import seed_database
+from app.seed import ensure_base_data, seed_database
 from app.services import add_bookmark, get_bookmarks, get_feed, remove_bookmark, search_articles, update_user_preferences
 
 
